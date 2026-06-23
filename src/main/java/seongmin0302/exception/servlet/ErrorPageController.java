@@ -20,7 +20,7 @@ public class ErrorPageController {
 
     @RequestMapping("/error-page/500")
     public String errorPage500(HttpServletRequest request, HttpServletResponse response) {
-        log.info("WebServerCustomizer의해서 ErrorPageController 호출되어 errorPage 404 보여주겠습니다.");
+        log.info("WebServerCustomizer의해서 ErrorPageController 호출되어 errorPage 500 보여주겠습니다.");
         return "error-page/500";
     }
 }
