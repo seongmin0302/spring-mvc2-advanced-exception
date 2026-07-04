@@ -1,5 +1,12 @@
 package seongmin0302.exception.servlet;
 
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.catalina.connector.Request;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +33,17 @@ public class ErrorPageController {
         printErrorInfo(request);
         return "error-page/500";
     }
+
+    @RequestMapping(value = "/error-page/500", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Map<String,Object>> errorPage500(HttpServletRequest request, HttpServletResponse response) {
+        log.info("WebServerCustomizer의해서 ErrorPageController 호출되었습니다.");
+        Map<Object, Object> result = new HashMap<>();       
+        Exception ex = (Exception) request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
+        result.put("status", request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE));
+        result.put("message", ex.getMessage());
+    }
+
+
 
     private void printErrorInfo(HttpServletRequest request) {
         log.info("ERROR_EXCEPTION: ex=", request.getAttribute(RequestDispatcher.ERROR_EXCEPTION));
