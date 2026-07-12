@@ -1,32 +1,34 @@
 package seongmin0302.exception.api;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
-@RestController
 @Slf4j
+@RestController
 public class ApiExceptionController {
+    
+    @GetMapping("/api/members/{id}")
+    public MemberDto getMember(@PathVariable("id") String id, HttpServletRequest request) {
 
-    @GetMapping("api/members/{id}")
-    public MemberDto getMember(@PathVariable("id") String id) {
+        log.info("확인해보겠습니다 ! Accept Header = {}", request.getHeader("Accept"));
+
         if(id.equals("ex")) {
-            throw new RuntimeException("잘못된 사용자 입니다유 ㅠㅠㅠ");
+            throw new RuntimeException("이것은 잘못된 사용자 입니다. ㅠㅠㅠ");
         }
 
-        return new MemberDto(id, "안뇽하세요 나의 이름은 " + id);
+        return new MemberDto(id, "회원의 이름을 소개합니다: " + id);
     }
 
-    @Data
     @AllArgsConstructor
+    @Data
     static class MemberDto {
         private String memberId;
         private String name;
     }
-
 }
