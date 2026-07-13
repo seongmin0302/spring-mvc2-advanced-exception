@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import seongmin0302.exception.exception.UserException;
 
 @Slf4j
 @RestController
@@ -20,6 +21,14 @@ public class ApiExceptionController {
 
         if(id.equals("ex")) {
             throw new RuntimeException("이것은 잘못된 사용자 입니다. ㅠㅠㅠ");
+        }
+
+        if(id.equals("bad")) {
+            throw new IllegalArgumentException("이런 잘못된 값을 입력했네요 ㅠㅠㅠ");
+        }
+
+        if(id.equals("user-ex")) {
+            throw new UserException("사용자 정의 오류 입ㄴ디ㅏㅇ");
         }
 
         return new MemberDto(id, "회원의 이름을 소개합니다: " + id);

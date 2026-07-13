@@ -1,8 +1,11 @@
 package seongmin0302.exception;
 
+import java.util.List;
+
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -10,6 +13,8 @@ import jakarta.servlet.DispatcherType;
 import jakarta.servlet.Filter;
 import seongmin0302.exception.filter.LogFilter;
 import seongmin0302.exception.interceptor.LogInterceptor;
+import seongmin0302.exception.resolver.MyHandlerExceptionResolver;
+import seongmin0302.exception.resolver.UserHandlerExceptionResolver;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -31,4 +36,12 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns("/css/**", "/*.ico", "/error", "/error-page/**");
     }
+
+    @Override
+    public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> resolvers) {
+        resolvers.add(new MyHandlerExceptionResolver());
+        resolvers.add(new UserHandlerExceptionResolver());
+    }
+
+    
 }
